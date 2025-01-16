@@ -588,15 +588,20 @@
         </div>
     </section>
 
-    <section id="about" class="about">
-        <h2 class="section-title fade-up">About Me</h2>
-        <div class="about-container" style="grid-template-columns: repeat(2, 1fr); gap: 4rem;">
-            <div class="about-image fade-up" style="position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 1; max-width: 500px; margin: 0 auto;">
-                <img src="IMG_0130 (1).JPG" alt="Terell Reed" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px; border: 1px solid rgba(205, 16, 65, 0.1); transition: transform 0.3s ease;">
-            </div>
-            <div class="about-content fade-up" style="display: flex; flex-direction: column; justify-content: center;">
-                <h3 style="font-size: 2rem; margin-bottom: 1.5rem; color: var(--primary);">Innovator & Technology Leader</h3>
-                <p style="font-size: 1.1rem; line-height: 1.8;">A passionate developer and technology consultant with 3+ years experience crafting innovative solutions. Proud member of Kappa Alpha Psi Fraternity, Inc., bringing leadership and excellence to every project.</p>
+<section id="about" class="about" style="position: relative; overflow: hidden; padding: 8rem 2rem;">
+        <!-- Background Image -->
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
+            <img src="IMG_0130 (1).JP" alt="" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.15; filter: blur(2px);">
+        </div>
+        
+        <!-- Content -->
+        <div style="position: relative; z-index: 2; max-width: 1400px; margin: 0 auto;">
+            <h2 class="section-title fade-up">About Me</h2>
+            <div class="about-container" style="background: rgba(31, 41, 55, 0.85); backdrop-filter: blur(10px); border-radius: 16px; padding: 3rem; border: 1px solid rgba(205, 16, 65, 0.1);">
+                <div class="about-content fade-up" style="max-width: 800px; margin: 0 auto; text-align: center;">
+                    <h3 style="font-size: 2rem; margin-bottom: 1.5rem; color: var(--primary);">Innovator & Technology Leader</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text);">A passionate developer and technology consultant with 3+ years experience crafting innovative solutions. Proud member of Kappa Alpha Psi Fraternity, Inc., bringing leadership and excellence to every project.</p>
+                </div>
             </div>
         </div>
     </section>
