@@ -101,6 +101,8 @@
             padding: 2.5rem;
             margin: 2rem 0;
             border: 1px solid rgba(205, 16, 65, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+                       0 2px 4px -1px rgba(0, 0, 0, 0.06);
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 0.8s ease forwards;
@@ -172,6 +174,13 @@
             gap: 0.5rem;
             opacity: 0;
             transform: translateX(-10px);
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+
+        .feature-item:hover {
+            background-color: rgba(205, 16, 65, 0.1);
         }
 
         .feature-item.animate {
@@ -217,6 +226,17 @@
             height: 300px;
         }
 
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
         /* Animations */
         @keyframes fadeInUp {
             from {
@@ -240,12 +260,38 @@
             }
         }
 
+        /* Mobile Styles */
         @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
             .nav-links {
                 display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--bg);
+                padding: 1rem;
+                flex-direction: column;
+                align-items: center;
+                border-bottom: 1px solid rgba(205, 16, 65, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
             }
             
             .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .consultation-form {
+                padding: 1.5rem;
+            }
+
+            .feature-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -256,6 +302,7 @@
     <nav>
         <div class="nav-container">
             <a href="index.html" class="logo">TR_</a>
+            <button class="mobile-menu-btn">☰</button>
             <div class="nav-links">
                 <a href="index.html#about">About</a>
                 <a href="index.html#awards">Awards</a>
@@ -271,7 +318,10 @@
     <div class="container">
         <div class="consultation-form">
             <h2 style="margin-bottom: 1rem; color: var(--primary);">Start Your Project</h2>
-            <p style="margin-bottom: 2rem; color: var(--text-secondary); font-size: 1.1rem;">Consultation Rate: <span style="color: var(--text); font-weight: 500;">$75/hr</span></p>
+            <p style="margin-bottom: 2rem; color: var(--text-secondary); font-size: 1.1rem;">
+                Consultation Rate: <span style="color: var(--text); font-weight: 500;">$75/hr</span>
+            </p>
+            
             <form id="consultationForm">
                 <div class="form-grid">
                     <!-- Basic Information -->
@@ -372,6 +422,11 @@
     </div>
 
     <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
         // Animate form groups on load
         document.addEventListener('DOMContentLoaded', () => {
             const formGroups = document.querySelectorAll('.form-group');
@@ -407,31 +462,49 @@
             }
             data.features = featuresArray;
 
-            // Prepare email body
+            // Modern email template
             const emailBody = `
-Project Consultation Request
+🚀 New Project Consultation Request
 
-Basic Information:
-- Full Name: ${data.name}
-- Email: ${data.email}
-- Phone Number: ${data.phone || 'Not Provided'}
-- Company/Organization: ${data.company || 'Not Provided'}
+👤 Client Details
+━━━━━━━━━━━━━━━━
+• Name: ${data.name}
+• Email: ${data.email}
+${data.phone ? `• Phone: ${data.phone}` : ''}
+${data.company ? `• Organization: ${data.company}` : ''}
 
-Project Details:
-- Project Type: ${data.projectType}
-- Required Features: ${data.features ? data.features.join(', ') : 'None Selected'}
-- Budget Range: ${data.budget}
-- Timeline: ${data.timeline || 'Not Specified'}
+📋 Project Scope
+━━━━━━━━━━━━━━━━
+• Type: ${data.projectType}
+• Budget: ${data.budget}
+${data.timeline ? `• Timeline: ${data.timeline}` : ''}
 
-Project Description:
+🛠️ Required Features
+━━━━━━━━━━━━━━━━
+${data.features.length > 0 ? data.features.map(feature => `• ${feature}`).join('\n') : '• No specific features selected'}
+
+📝 Project Description
+━━━━━━━━━━━━━━━━
 ${data.description}
-            `;
+
+--
+Sent via Project Consultation Form
+`;
 
             // Encode the email body for use in mailto link
             const encodedBody = encodeURIComponent(emailBody);
+            const emailSubject = encodeURIComponent(`Project Inquiry: ${data.projectType} from ${data.name}`);
 
-            // Open Gmail compose window
-            window.location.href = `https://mail.google.com/mail/?view=cm&fs=1&to=terellebony@gmail.com&su=Project%20Consultation%20Request&body=${encodedBody}`;
+            // Check if user is on mobile
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+            if (isMobile) {
+                // Mobile: Open in email app
+                window.location.href = `mailto:terellebony@gmail.com?subject=${emailSubject}&body=${encodedBody}`;
+            } else {
+                // Desktop: Open in Gmail web
+                window.location.href = `https://mail.google.com/mail/?view=cm&fs=1&to=terellebony@gmail.com&su=${emailSubject}&body=${encodedBody}`;
+            }
         });
     </script>
 </body>
