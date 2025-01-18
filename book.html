@@ -495,16 +495,8 @@ Sent via Project Consultation Form
             const encodedBody = encodeURIComponent(emailBody);
             const emailSubject = encodeURIComponent(`Project Inquiry: ${data.projectType} from ${data.name}`);
 
-            // Check if user is on mobile
-            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-            if (isMobile) {
-                // Mobile: Open in email app
-                window.location.href = `mailto:terellebony@gmail.com?subject=${emailSubject}&body=${encodedBody}`;
-            } else {
-                // Desktop: Open in Gmail web
-                window.location.href = `https://mail.google.com/mail/?view=cm&fs=1&to=terellebony@gmail.com&su=${emailSubject}&body=${encodedBody}`;
-            }
+            // Always open in Gmail
+            window.location.href = `https://mail.google.com/mail/?view=cm&fs=1&to=terellebony@gmail.com&su=${emailSubject}&body=${encodedBody}`;
         });
     </script>
 </body>
