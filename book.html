@@ -444,39 +444,39 @@
             });
         });
 
-        // Form submission handler
-        document.getElementById('consultationForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+// Form submission handler
+document.getElementById('consultationForm').addEventListener('submit', function(event) {
+    event.preventDefault();
 
-            // Collect form data
-            const formData = new FormData(event.target);
-            const data = {};
-            const featuresArray = [];
+    // Collect form data
+    const formData = new FormData(event.target);
+    const data = {};
+    const featuresArray = [];
 
-            for (let [key, value] of formData.entries()) {
-                if (key === 'features[]') {
-                    featuresArray.push(value);
-                } else {
-                    data[key] = value;
-                }
-            }
-            data.features = featuresArray;
+    for (let [key, value] of formData.entries()) {
+        if (key === 'features[]') {
+            featuresArray.push(value);
+        } else {
+            data[key] = value;
+        }
+    }
+    data.features = featuresArray;
 
-            // Modern email template
-            const emailBody = `
+    // Modern email template
+    const emailBody = `
 🚀 New Project Consultation Request
 
 👤 Client Details
 ━━━━━━━━━━━━━━━━
-• Name: ${data.name}
-• Email: ${data.email}
+- Name: ${data.name}
+- Email: ${data.email}
 ${data.phone ? `• Phone: ${data.phone}` : ''}
 ${data.company ? `• Organization: ${data.company}` : ''}
 
 📋 Project Scope
 ━━━━━━━━━━━━━━━━
-• Type: ${data.projectType}
-• Budget: ${data.budget}
+- Type: ${data.projectType}
+- Budget: ${data.budget}
 ${data.timeline ? `• Timeline: ${data.timeline}` : ''}
 
 🛠️ Required Features
@@ -491,21 +491,52 @@ ${data.description}
 Sent via Project Consultation Form
 `;
 
-            // Encode the email body for use in mailto link
-            const encodedBody = encodeURIComponent(emailBody);
-            const emailSubject = encodeURIComponent(`Project Inquiry: ${data.projectType} from ${data.name}`);
+    // Encode the email body and subject for use in Gmail link
+    const encodedBody = encodeURIComponent(emailBody);
+    const emailSubject = encodeURIComponent(`Project Inquiry: ${data.projectType} from ${data.name}`);
+    
+    // Gmail URL (works for both mobile and desktop)
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=terellebony@gmail.com&su=${emailSubject}&body=${encodedBody}`;
+    
+    // Function to check if Gmail app is installed (for Android)
+    const checkGmailApp = () => {
+        const testLink = document.createElement('a');
+        testLink.href = 'googlegmail://';
+        return typeof testLink.protocol !== 'undefined' && testLink.protocol === 'googlegmail:';
+    };
 
-            // Check if user is on mobile
-            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-            if (isMobile) {
-                // Mobile: Open in email app
-                window.location.href = `mailto:terellebony@gmail.com?subject=${emailSubject}&body=${encodedBody}`;
-            } else {
-                // Desktop: Open in Gmail web
-                window.location.href = `https://mail.google.com/mail/?view=cm&fs=1&to=terellebony@gmail.com&su=${emailSubject}&body=${encodedBody}`;
-            }
-        });
+    // Try to open Gmail
+    try {
+        // For Android devices
+        if (/Android/i.test(navigator.userAgent)) {
+            // Try to open Gmail app first
+            const intentUrl = `intent://compose?to=terellebony@gmail.com&subject=${emailSubject}&body=${encodedBody}#Intent;scheme=googlegmail;package=com.google.android.gm;end`;
+            window.location.href = intentUrl;
+            
+            // Fallback to web Gmail after a short delay if app doesn't open
+            setTimeout(() => {
+                window.location.href = gmailUrl;
+            }, 500);
+        }
+        // For iOS devices
+        else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+            // Try to open Gmail app first
+            window.location.href = `googlegmail:///co?to=terellebony@gmail.com&subject=${emailSubject}&body=${encodedBody}`;
+            
+            // Fallback to web Gmail after a short delay if app doesn't open
+            setTimeout(() => {
+                window.location.href = gmailUrl;
+            }, 500);
+        }
+        // For desktop browsers
+        else {
+            window.location.href = gmailUrl;
+        }
+    } catch (e) {
+        // Fallback to web Gmail if any error occurs
+        window.location.href = gmailUrl;
+    }
+});
     </script>
 </body>
 </html>
