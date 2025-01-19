@@ -462,38 +462,49 @@ document.getElementById('consultationForm').addEventListener('submit', function(
     }
     data.features = featuresArray;
 
-    // Modern email template
+    // Professional email template
     const emailBody = `
-🚀 New Project Consultation Request
+Dear Terell,
 
-👤 Client Details
-━━━━━━━━━━━━━━━━
+I hope this email finds you well. I am reaching out to discuss a potential project collaboration and would like to schedule a consultation to explore this opportunity further.
+
+Project Consultation Details:
+------------------------------------------
+
+CLIENT INFORMATION:
 - Name: ${data.name}
 - Email: ${data.email}
 ${data.phone ? `• Phone: ${data.phone}` : ''}
 ${data.company ? `• Organization: ${data.company}` : ''}
 
-📋 Project Scope
-━━━━━━━━━━━━━━━━
+PROJECT SPECIFICATIONS:
 - Type: ${data.projectType}
-- Budget: ${data.budget}
-${data.timeline ? `• Timeline: ${data.timeline}` : ''}
+- Estimated Budget: ${data.budget}
+${data.timeline ? `• Desired Timeline: ${data.timeline}` : ''}
 
-🛠️ Required Features
-━━━━━━━━━━━━━━━━
-${data.features.length > 0 ? data.features.map(feature => `• ${feature}`).join('\n') : '• No specific features selected'}
+TECHNICAL REQUIREMENTS:
+${data.features.length > 0 ? data.features.map(feature => `• ${feature.charAt(0).toUpperCase() + feature.slice(1).replace(/([A-Z])/g, ' $1')}`).join('\n') : '• To be discussed during consultation'}
 
-📝 Project Description
-━━━━━━━━━━━━━━━━
+PROJECT OVERVIEW:
 ${data.description}
 
---
-Sent via Project Consultation Form
+Next Steps:
+------------------------------------------
+I would appreciate the opportunity to schedule a consultation call to discuss this project in more detail. Please let me know your availability for a meeting at your earliest convenience.
+
+I understand your consultation rate is $75/hour and look forward to exploring how we can work together to bring this project to life.
+
+Best regards,
+${data.name}
+${data.company ? `${data.company}` : ''}
+
+-------------------
+Sent via TR_ Project Consultation Portal
 `;
 
     // Encode the email body and subject for use in Gmail link
     const encodedBody = encodeURIComponent(emailBody);
-    const emailSubject = encodeURIComponent(`Project Inquiry: ${data.projectType} from ${data.name}`);
+    const emailSubject = encodeURIComponent(`Project Consultation Request: ${data.projectType} - ${data.name}`);
     
     // Gmail URL (works for both mobile and desktop)
     const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=terellebony@gmail.com&su=${emailSubject}&body=${encodedBody}`;
@@ -509,21 +520,17 @@ Sent via Project Consultation Form
     try {
         // For Android devices
         if (/Android/i.test(navigator.userAgent)) {
-            // Try to open Gmail app first
             const intentUrl = `intent://compose?to=terellebony@gmail.com&subject=${emailSubject}&body=${encodedBody}#Intent;scheme=googlegmail;package=com.google.android.gm;end`;
             window.location.href = intentUrl;
             
-            // Fallback to web Gmail after a short delay if app doesn't open
             setTimeout(() => {
                 window.location.href = gmailUrl;
             }, 500);
         }
         // For iOS devices
         else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-            // Try to open Gmail app first
             window.location.href = `googlegmail:///co?to=terellebony@gmail.com&subject=${emailSubject}&body=${encodedBody}`;
             
-            // Fallback to web Gmail after a short delay if app doesn't open
             setTimeout(() => {
                 window.location.href = gmailUrl;
             }, 500);
