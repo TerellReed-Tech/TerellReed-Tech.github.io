@@ -1,3 +1,5 @@
+/* Enhanced Animations and Hover Effects */
+
 /* Typing Animation */
 @keyframes typing {
     from { width: 0 }
@@ -34,17 +36,20 @@
 /* Hover Effects */
 .cert-card:hover,
 .service-card:hover,
-.award-card:hover {
+.award-card:hover,
+.conference-card:hover {
     transform: translateY(-10px);
     border-color: var(--primary);
+    transition: all 0.3s ease;
 }
 
 .project-card:hover img {
     transform: scale(1.05);
+    transition: transform 0.3s ease;
 }
 
-.resume-button:hover,
-.service-card button:hover {
+.resume-btn:hover,
+button:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(205, 16, 65, 0.2);
 }
@@ -87,88 +92,71 @@
     animation: fadeIn 0.3s ease-out;
 }
 
-
-.resume {
-    padding: 8rem 2rem;
-    background: var(--bg);
+/* Additional Hover and Interaction Enhancements */
+.nav-links a:hover {
+    color: var(--primary);
+    transition: color 0.3s ease;
 }
 
-.resume-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-.resume-card {
-    background: var(--card);
-    padding: 3rem;
-    border-radius: 12px;
-    border: 1px solid rgba(205, 16, 65, 0.1);
-    max-width: 600px;
-    margin: 0 auto;
+.social-links a:hover {
+    color: var(--primary);
+    transform: scale(1.1);
     transition: all 0.3s ease;
 }
 
-.resume-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--primary);
-}
-
-.resume-icon {
-    width: 60px;
-    height: 60px;
-    margin: 0 auto 1.5rem;
-    color: var(--primary);
-}
-
-.resume-content {
-    margin-bottom: 2rem;
-}
-
-.resume-content h3 {
-    color: var(--text);
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-}
-
-.resume-content p {
-    color: var(--text-secondary);
-    margin-bottom: 2rem;
-}
-
-.resume-buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-}
-
-.resume-btn {
-    padding: 1rem 2rem;
-    background: var(--primary);
-    color: var(--text);
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
+.cert-verify:hover {
+    color: var(--secondary);
+    transform: translateX(5px);
     transition: all 0.3s ease;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
 }
 
-.resume-btn.secondary {
-    background: transparent;
-    border: 2px solid var(--primary);
+/* Responsive Animations */
+@media (max-width: 768px) {
+    /* Adjust animations for mobile */
+    @keyframes typing {
+        from { width: 0 }
+        to { width: 100% }
+    }
+
+    .hero h1 {
+        animation: fadeUp 0.8s ease forwards;
+    }
+
+    .typing-text {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
 }
 
-.resume-btn:hover {
-    transform: translateY(-2px);
-    background: var(--secondary);
-    color: var(--primary);
+/* Performance Optimization */
+.cert-card,
+.award-card,
+.conference-card,
+.resume-btn,
+button {
+    will-change: transform, border-color;
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
-.resume-btn.secondary:hover {
-    background: var(--primary);
-    color: var(--text);
+/* Subtle Background Animations */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(205, 16, 65, 0.1), rgba(3, 7, 18, 0.8));
+    animation: backgroundShift 10s ease infinite alternate;
+    background-size: 200% 200%;
+}
+
+@keyframes backgroundShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
 }
