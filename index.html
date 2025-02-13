@@ -583,163 +583,87 @@
             }
         }
     /* Mobile Responsiveness Improvements */
-@media (max-width: 768px) {
-    /* Global Adjustments */
+    @media (max-width: 768px) {
+    /* Fix navbar overlap */
     body {
-        font-size: 16px;
+        padding-top: 60px; /* Adjust based on navbar height */
     }
 
-    /* Navigation */
     nav {
-        padding: 1rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        height: 60px; /* Set a specific height */
+        display: flex;
+        align-items: center;
     }
 
     .nav-container {
-        flex-direction: column;
+        width: 100%;
+        padding: 0 1rem;
+        display: flex;
+        justify-content: space-between;
         align-items: center;
     }
 
     .logo {
-        margin-bottom: 1rem;
+        font-size: 1.1rem;
     }
 
+    /* Mobile Menu Toggle */
     .nav-links {
-        display: flex;
+        display: none;
+        position: fixed;
+        top: 60px; /* Position below navbar */
+        left: 0;
+        width: 100%;
+        background: var(--bg);
         flex-direction: column;
         align-items: center;
-        gap: 1rem;
-        width: 100%;
+        padding: 1rem 0;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        animation: slideDown 0.3s ease;
     }
 
-    .nav-links a {
-        width: 100%;
-        text-align: center;
-        padding: 0.75rem;
-        background: rgba(205, 16, 65, 0.1);
-        border-radius: 8px;
+    .nav-links.active {
+        display: flex;
     }
 
-    /* Hero Section */
+    /* Mobile Menu Toggle Button */
+    .mobile-menu-toggle {
+        display: block;
+        background: none;
+        border: none;
+        color: var(--primary);
+        font-size: 1.5rem;
+        cursor: pointer;
+        z-index: 1100;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Adjust hero section to account for fixed navbar */
     .hero {
-        padding: 1rem;
-        text-align: center;
-    }
-
-    .hero-content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .hero h1 {
-        font-size: 2.5rem;
-        text-align: center;
-    }
-
-    .hero p {
-        text-align: center;
-        max-width: 100%;
-    }
-
-    .hero .button {
-        margin: 0.5rem;
-        padding: 10px 20px;
-        font-size: 14px;
-    }
-
-    /* About Section */
-    .about-container {
-        grid-template-columns: 1fr !important;
-        gap: 2rem !important;
-    }
-
-    .about-image {
-        max-width: 300px !important;
-    }
-
-    .about-content {
-        text-align: center;
-    }
-
-    .about-content h3 {
-        font-size: 1.5rem !important;
-    }
-
-    /* Awards, Conferences, Certifications Sections */
-    .awards-grid,
-    .conference-grid,
-    .cert-grid {
-        grid-template-columns: 1fr !important;
-    }
-
-    /* Resume Section */
-    .resume-buttons {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .resume-btn {
-        width: 100%;
-        justify-content: center;
-    }
-
-    /* Section Titles */
-    .section-title {
-        font-size: 2rem;
-    }
-
-    /* Contact Section */
-    .contact-container {
-        grid-template-columns: 1fr;
-    }
-
-    /* Signature */
-    .signature {
-        font-size: 4rem;
-    }
-
-    /* Buttons and Interactive Elements */
-    .resume-btn, 
-    button, 
-    .hero .button {
-        width: 100%;
-        max-width: 300px;
-        margin: 0.5rem 0;
+        padding-top: 80px; /* Additional padding to prevent content from being hidden */
     }
 }
 
-/* Additional Mobile Improvements */
-@media (max-width: 480px) {
-    .hero h1 {
-        font-size: 2rem;
+/* Ensure the navbar doesn't interfere with scrolling on mobile */
+@media (max-width: 768px) {
+    html {
+        scroll-padding-top: 60px; /* Adjust to match navbar height */
     }
-
-    .about-image {
-        max-width: 250px !important;
-    }
-
-    .signature {
-        font-size: 3rem;
-    }
-}
-
-/* Ensure images are responsive */
-img {
-    max-width: 100%;
-    height: auto;
-}
-
-/* Improve touch targets for mobile */
-a, button {
-    min-height: 44px;
-    min-width: 44px;
-    padding: 10px;
-}
-
-/* Prevent text overflow */
-* {
-    word-wrap: break-word;
-    overflow-wrap: break-word;
 }
     </style>
 </head>
@@ -776,7 +700,7 @@ a, button {
     <section id="about" class="about">
         <h2 class="section-title fade-up">About Me</h2>
         <div class="about-container" style="grid-template-columns: repeat(2, 1fr); gap: 4rem;">
-            <div class="about-image fade-up" style="position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 1; max-width: 500px; margin: 0 auto;">
+    
                 <img src="" alt="Terell Reed" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px; border: 1px solid rgba(205, 16, 65, 0.1); transition: transform 0.3s ease;">
             </div>
             <div class="about-content fade-up" style="display: flex; flex-direction: column; justify-content: center;">
